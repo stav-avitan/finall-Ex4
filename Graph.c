@@ -471,10 +471,10 @@ char* getS(char s[], struct Graph* g, int numOfNodes)
 char* getT(char input[], struct Graph* g, int numOfNodes)
 {
     struct newGraph ng;
-    int num = atoi(&(input[2]));
+    int num_nodes = atoi(&(input[2]));
+    int num_vertices = numOfNodes;
     int count=4
     int nodes[num];
-    int final = 0;
 
     while (count-4 < num)
     {
@@ -483,19 +483,8 @@ char* getT(char input[], struct Graph* g, int numOfNodes)
     }
     //initilize graph
     ng.num_vertices = numOfNodes;
-    ng.edges = InitializeMatrix(g, numOfNodes);
+    shortest_path(InitializeMatrix(g, numOfNodes),num_vertices,nodes,num_nodes)
 
-    shortest_path(&ng, 0, nodes, num);
-
-    final = ng.final_distances[nodes[0]];
-
-    for (int i = 0; i < num; i++)
-    {
-        if (ng.final_distances[nodes[i]] > final)
-        {
-            final = ng.final_distances[nodes[i]];
-        }
-    }
 
     input = str_slice(input, 4+2*num, strlen(input) + 1);
     return input;
