@@ -1,9 +1,0 @@
-﻿  Graph.c
-C:\Users\magshimim\source\repos\Mex4\Mex4\Graph.c(255,31): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\magshimim\source\repos\Mex4\Mex4\Graph.c(584,1): warning C4029: declared formal parameter list different from definition
-C:\Users\magshimim\source\repos\Mex4\Mex4\Graph.c(614,46): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\magshimim\source\repos\Mex4\Mex4\Graph.c(620,1): warning C4029: declared formal parameter list different from definition
-C:\Users\magshimim\source\repos\Mex4\Mex4\Graph.c(656,49): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\magshimim\source\repos\Mex4\Mex4\Graph.c(687,33): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\magshimim\source\repos\Mex4\Mex4\Graph.c(693,1): warning C4029: declared formal parameter list different from definition
-  Mex4.vcxproj -> C:\Users\magshimim\source\repos\Mex4\x64\Debug\Mex4.exe
