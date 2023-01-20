@@ -1,4 +1,9 @@
+#include "Graph.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "Node.h"
 #include "Edge.h"
+
 
 int isEdgeExist(struct Edge* head, int src)
 {

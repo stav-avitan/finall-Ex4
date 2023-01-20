@@ -1,7 +1,9 @@
+#include"Graph.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include<string.h>
-#include"Graph.h"
+#include "Node.h"
+#include "Edge.h"
 
 int main(void)
 {

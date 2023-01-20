@@ -1,148 +1,14 @@
-#include"Graph.h"
-
-void ShortestRoute(int* adj, int srci, int target, int numOfNodes)
-{
-
-    int src = srci;
-    int dst = target;
-    int n = 0;
-    char dump = 0;
-    int *res = malloc((numOfNodes) * sizeof(int));
-    int *arr = malloc((numOfNodes) * sizeof(int));
-
-    for (int i = 0; i < numOfNodes; i++)
-    {
-        res[i] = INT_MAX, arr[i] = 0;
-    }
-    res[src] = 0;
-
-    for (int j = 0; j < numOfNodes - 1; j++)
-    {
-        n = miLn(res, arr, numOfNodes);
-        arr[n] = 1;
-        for (int k = 0; k < numOfNodes; k++)
-            if (!(arr[k]) && (adj[n* numOfNodes + k]) && (res[n] != INT_MAX) && (res[n] + adj[n * numOfNodes + k] < res[k]))
-                res[k] = res[n] + adj[n * numOfNodes + k];
-    }
-    if (res[dst] == INT_MAX || res[dst] == 0)
-    {
-        printf("Shortest path: -1");
-    }
-    else
-        printf("Shortest path: %d", res[dst]);
-
-    free(adj);
-    free(res);
-    free(arr);
-}
-
-int miLn(int res[], int arr[], int numOfNodes)
-{
-    // Initialize min value
-    int m = INT_MAX, minV;
-
-    for (int i = 0; i < numOfNodes; i++)
-        if (arr[i] == 0 && res[i] <= m)
-            m = res[i], minV = i;
-
-    return minV;
-}
-
-int dijsktra(struct Graph* head, struct Node* src, struct Node* tar, int numOfNodes)
-{
-    struct Edge* temp = head->start;
-   /* int i, j, n, source, target, min = 999;
-    int start, m, d;
-    int* visited= malloc((numOfNodes) * sizeof(int));
-    int* dist = malloc((numOfNodes) * sizeof(int));
-    int* pre = malloc((numOfNodes) * sizeof(int));
-    int* path = malloc((numOfNodes) * sizeof(int)); 
-    int **cost = malloc((numOfNodes * numOfNodes) * sizeof(int));//need to alloc precise number;*/
-    int cost[10][10], i, j, n, source, target, visited[10] = { 0 }, min = 999, dist[10], pre[10];
-    int start, m, d, path[10];
-    n = numOfNodes;
-    source = src->src;
-    target = tar->src;
-    
-    // Input graph
-    
-    for (i = 1; i <= n; i++)
-    {
-        for (j = 1; j <= n; j++)
-        {
-            cost[i][j] = 0;
-        }
-    }
-    while (temp->next != NULL)
-    {
-        cost[head->start->src][head->start->dest] = head->start->weight;
-        temp = temp->next;
-    }
-    for (int m = 1; m <= n; m++)
-    {
-        for (int l = 1; l<= n; l++)
-        {
-            if (cost[m][l] == 0)
-                cost[m][l] = 999;
-        }
-    }
-    // logic for dijkstra's aglorithm
-    start = source;
-    for (i = 1; i <= n; i++)
-    {
-        dist[i] = 999;  // here we initialize all distances with the maximum value (999) you take any other value also
-        pre[i] = -1;   // pre for the previous node 
-    }
-    visited[source] = 1; // visited source node
-    dist[source] = 0;  // distance of first node from first node is 0
-    while (visited[target] == 0)
-    {
-        min = 999;
-        m = 0;
-        for (i = 1; i <= n; i++)
-        {
-            d = dist[start] + cost[start][i];   // calcualte the distance from the source
-            if (d < dist[i] && visited[i] == 0)
-            {
-                dist[i] = d;
-                pre[i] = start;
-            }
-            if (min > dist[i] && visited[i] == 0)
-            {
-                min = dist[i];
-                m = i;
-            }
-        }
-        start = m;
-        visited[m] = 1;
-    }
-    // logic for printing path
-    start = target;
-    j = 0;
-    while (start != -1)
-    {
-        path[j++] = start;
-        start = pre[start];
-    }
-    // printing of the path
-    for (i = j - 1; i >= 0; i--)
-    {
-        if (i != j - 1)
-            printf(" to ");
-        printf("%d", path[i]);
-    }
-
-    printf("\n shortest path is %d", dist[target]);
+#include "Graph.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include<limits.h>
+#include <ctype.h>
+#include "Node.h"
+#include "Edge.h"
+#define MAX_NODES 100
 
 
-    free(cost);
-    free(visited);
-    free(dist);
-    free(pre);
-    free(path);
-
-    return 0;
-}
 
 
 int* InitializeMatrix(struct Graph* g, int numOfNodes)
@@ -269,7 +135,7 @@ char* readinput(int* len)
     int flag = 1;
     char* input = NULL;
     char tempbuf[200];
-    size_t inputlen = 0, templen = 0;
+    size_t templen = 0;
     do {
         fgets(tempbuf, 200, stdin);
         templen = strlen(tempbuf);
@@ -321,7 +187,6 @@ struct Graph* createGraph(char** input, int strlen)
     graph->head = NULL;
     graph->start = NULL;
     int numOfNodes = atoi(input[0]);
-    int flag = 0;
     int curNode = 0;
     int newNodes = 0;
     int i = 0;
@@ -418,7 +283,7 @@ char* getD(char input[], struct Graph* g)
 
 char* getB(char input[], struct Graph* g)
 {
-    int flag = 0;
+
     int curNode = atoi(&(input[2]));
     //int newNodes = 0;
     int i = 0;
@@ -461,7 +326,7 @@ char* getS(char s[], struct Graph* g, int numOfNodes)
 {
    int src = atoi(&(s[2]));
    int dst = atoi(&(s[4]));
-   shortest_path_dijkstra(src, dst, numOfNodes, InitializeMatrix(g, numOfNodes), src, dst, numOfNodes);
+   shortest_path_dijkstra(src, dst, numOfNodes, InitializeMatrix(g, numOfNodes));
 
    s= str_slice(s, 6, strlen(s) + 1);
 
@@ -470,23 +335,20 @@ char* getS(char s[], struct Graph* g, int numOfNodes)
 
 char* getT(char input[], struct Graph* g, int numOfNodes)
 {
-    struct newGraph ng;
     int num_nodes = atoi(&(input[2]));
-    int num_vertices = numOfNodes;
-    int count=4
-    int nodes[num];
+    int count=4;
+    int nods [num_nodes];
 
-    while (count-4 < num)
+    while (count-4 < num_nodes)
     {
-        nodes[count - 4] = input[count];
+        nods[count - 4] = input[count];
         count += 2;
     }
     //initilize graph
-    ng.num_vertices = numOfNodes;
-    shortest_path(InitializeMatrix(g, numOfNodes),num_vertices,nodes,num_nodes)
+    shortest_path(InitializeMatrix(g, numOfNodes),numOfNodes,nods,num_nodes);
 
 
-    input = str_slice(input, 4+2*num, strlen(input) + 1);
+    input = str_slice(input, 4+2*num_nodes, strlen(input) + 1);
     return input;
 }
 
@@ -531,3 +393,129 @@ void OptionManager(char choise, char* input, int lenStr)
     }
 
 }
+
+
+void shortest_path_dijkstra(int src, int dest, int num_vertices, int* edges) {
+    int* dist = (int*)malloc(num_vertices * sizeof(int));
+    int* prev = (int*)malloc(num_vertices * sizeof(int));
+    int* visited = (int*)calloc(num_vertices, sizeof(int));
+    int i, j;
+
+    for (i = 0; i < num_vertices; i++) {
+        dist[i] = INT_MAX;
+        prev[i] = -1;
+    }
+
+    dist[src] = 0;
+
+    for (i = 0; i < num_vertices; i++) {
+        int u = -1;
+        int min_dist = INT_MAX;
+
+        for (j = 0; j < num_vertices; j++) {
+            if (!visited[j] && dist[j] < min_dist) {
+                u = j;
+                min_dist = dist[j];
+            }
+        }
+
+        if (u == -1) {
+            break;
+        }
+
+        visited[u] = 1;
+
+        for (j = 0; j < num_vertices; j++) {
+            if (edges[u*num_vertices + j] && !visited[j]) {
+                int new_dist = dist[u] + edges[u*num_vertices + j];
+                if (new_dist < dist[j]) {
+                    dist[j] = new_dist;
+                    prev[j] = u;
+                }
+            }
+        }
+    }
+
+    if (prev[dest] == -1) {
+        printf("Dijsktra shortest path: %d \n", -1);
+        return;
+    }
+
+    int current = dest;
+    int path[num_vertices];
+    int path_size = 0;
+    while (current != src) {
+        path[path_size++] = current;
+        current = prev[current];
+    }
+    path[path_size++] = src;
+    for (i = path_size - 1; i >= 0; i--) {
+        printf("Dijsktra shortest path: %d \n", path[i]);
+    }
+    printf("\n");
+}
+
+void shortest_path(int* adj_matrix, int num_vertices, int* nods, int num_nodes) {
+    int* dist = (int*)malloc(num_vertices * sizeof(int));
+    int* prev = (int*)malloc(num_vertices * sizeof(int));
+    int* visited = (int*)calloc(num_vertices, sizeof(int));
+    int i, j, u;
+
+    for (i = 0; i < num_vertices; i++) {
+        dist[i] = INT_MAX;
+        prev[i] = -1;
+    }
+
+    dist[nods[0]] = 0;
+
+    for (i = 0; i < num_vertices; i++) {
+        int min_dist = INT_MAX;
+        for (j = 0; j < num_vertices; j++) {
+            if (!visited[j] && dist[j] < min_dist) {
+                u = j;
+                min_dist = dist[j];
+            }
+        }
+
+        if (min_dist == INT_MAX) {
+            break;
+        }
+
+        visited[u] = 1;
+
+        for (j = 0; j < num_vertices; j++) {
+            if (adj_matrix[u* num_vertices +j] != -1 && !visited[j]) {
+                int new_dist = dist[u] + adj_matrix[u* num_vertices+j];
+                if (new_dist < dist[j]) {
+                    dist[j] = new_dist;
+                    prev[j] = u;
+                }
+            }
+        }
+    }
+
+    for (i = 0; i < num_nodes; i++) {
+        if (prev[nods[i]] == -1) {
+            printf("TSP shortest path: %d \n",-1);
+            return;
+        }
+    }
+
+    for (i = 1; i < num_nodes; i++) {
+        int current = nods[i];
+        int path[num_vertices];
+        int path_size = 0;
+        while (current != nods[0]) {
+            path[path_size++] = current;
+            current = prev[current];
+        }
+        path[path_size++] = nods[0];
+
+        printf("%d", path[path_size - 1]);
+        for (j = path_size - 2; j >= 0; j--) {
+            printf(" -> %d", path[j]);
+        }
+        printf("\n");
+    }
+}
+

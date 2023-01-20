@@ -1,4 +1,9 @@
+#include "Graph.h"
 #include"Node.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "Edge.h"
+
 
 void createHead(struct Graph* head, int src)
 {
